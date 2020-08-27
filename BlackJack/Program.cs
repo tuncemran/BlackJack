@@ -9,7 +9,7 @@ namespace BlackJack
         
         static void Main(string[] args)
         {
-            Table table = new Table(3,6);
+            Table table = new Table(5,6);
             
         }
     }

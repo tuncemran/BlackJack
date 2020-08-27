@@ -93,20 +93,220 @@ namespace BlackJack
             
             dealer.DealCards(gameDeck,garbage,PlayerNumber);
             PlayersGetCards(dealer,players);
-            PrintTable(gameDeck,garbage,players);
+            //PrintTable(gameDeck,garbage,players);
 
-            for (int i = 0; i < players.Length; i++)
+            for (int i = 1; i < players.Length; i++)
             {
                 bool condition = players[i].PlayerPlays();
                 if (condition)
                 {
-                    Console.WriteLine("Player played \n");
-                    dealer.DealOnce(gameDeck,garbage,i);
-                    PlayerHit(dealer,players,i);
+                    while (condition)
+                    {
+                        dealer.DealOnce(gameDeck,garbage,i);
+                        PlayerHit(dealer,players,i);
+                        condition = players[i].PlayerPlays();
+                    }
                 }
             }
             
-            PrintTable(gameDeck,garbage,players);
+            bool dealerCondition = players[0].PlayerPlays();
+            if (dealerCondition)
+            {
+                while (dealerCondition)
+                {
+                    dealer.DealOnce(gameDeck,garbage,0);
+                    PlayerHit(dealer,players,0);
+                    dealerCondition = players[0].PlayerPlays();
+                }
+            }
+            
+            //PrintTable(gameDeck,garbage,players);
+            int[] winners = DecidedWinners(players);
+            for (int j = 0; j < players.Length; j++)
+            {
+                // show dealer's hands
+                // show players' hands and announce winners
+                if (j == 0)
+                {
+                    Console.WriteLine("Dealer's hand: ");
+                    //dealer
+                    Player dealerPlayer = players[j];
+                    foreach (Card card in dealerPlayer.cards)
+                    {
+                        if (card != null)
+                        {
+                            int caseSwitch = card.Value;
+
+                            switch (caseSwitch)
+                            {
+                                case 11:
+                                    Console.Write("Jack");
+                                    break;
+                                case 12:
+                                    Console.Write("Queen");
+                                    break;
+                                case 13:
+                                    Console.Write("King");
+                                    break;
+                                case 14:
+                                    Console.Write("Ace");
+                                    break;
+                                default:
+                                    Console.Write(card.Value);  
+                                    break;
+                            }
+                            Console.Write(" of ");
+                            Console.Write(card.Suit);
+                            Console.Write(", ");
+                            Console.Write("of ");
+                            Console.Write(card.Suit);
+                            Console.Write(", ");
+                        }
+                        
+                    }
+                    Console.Write("Total: ");
+                    Console.WriteLine(ReturnTotalPoints(dealerPlayer.cards));
+                    Console.WriteLine("");
+                }
+                else
+                {
+                    //players
+                    Player dealerPlayer = players[j];
+                    foreach (Card card in dealerPlayer.cards)
+                    {
+                        if (card != null)
+                        {
+                            
+                            int caseSwitch = card.Value;
+
+                            switch (caseSwitch)
+                            {
+                                case 11:
+                                    Console.Write("Jack");
+                                    break;
+                                case 12:
+                                    Console.Write("Queen");
+                                    break;
+                                case 13:
+                                    Console.Write("King");
+                                    break;
+                                case 14:
+                                    Console.Write("Ace");
+                                    break;
+                                default:
+                                    Console.Write(card.Value);  
+                                    break;
+                            }
+                            Console.Write(" of ");
+                            Console.Write(card.Suit);
+                            Console.Write(", ");
+                        }
+                        
+                    }
+                    Console.Write("Total: ");
+                    Console.WriteLine(ReturnTotalPoints(dealerPlayer.cards));
+
+                    if (winners[j] == 1)
+                    {
+                        Console.WriteLine("Player wins");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Player loses");
+                    }
+                }
+                
+            }
+        }
+
+        public int[] DecidedWinners(Player[] players)
+        {
+            int[] winners = new int[players.Length];
+            winners[0] = 2;
+            Player dealer = players[0];
+            int dealerPoints = ReturnTotalPoints(dealer.cards);
+            for (int i = 1; i < players.Length; i++)
+            {
+                Player player = players[i];
+                int playerPoints = ReturnTotalPoints(player.cards);
+                if ((playerPoints > dealerPoints && playerPoints < 22) || (dealerPoints > 21 && playerPoints < 22) || playerPoints == 21)
+                {
+                    winners[i] = 1;
+                }
+                
+                
+                else
+                {
+                    winners[i] = 0;
+                }
+            }
+            return winners;
+        }
+
+        public int ReturnTotalPoints(Card[] cards)
+        {
+            
+            int totalPoints;
+            int totalPlayerPointsP = 0;
+            int totalPlayerPointsWAceP = 0;
+            bool wAceP = false;
+            
+            foreach (Card card in cards)
+            {
+                if (card != null)
+                {
+                    if (card.Value == 14)
+                    {
+                        if (wAceP == false)
+                        {
+                            wAceP = true;
+                            totalPlayerPointsWAceP += totalPlayerPointsP;
+                            totalPlayerPointsWAceP += 11;
+                            totalPlayerPointsP += 1;
+                        }
+                        else
+                        {
+                            totalPlayerPointsWAceP += 11;
+                            totalPlayerPointsP += 1;
+                        }
+                    }
+                    else
+                    {
+                        int cardValue;
+                        if (card.Value > 10 && card.Value != 14)
+                        {
+                            cardValue = 10;
+                        }
+                        else
+                        {
+                            cardValue = card.Value;
+                        }
+                        totalPlayerPointsP += cardValue;
+                                    
+                        if (wAceP)
+                        {
+                            totalPlayerPointsWAceP += cardValue;
+                        }
+                    }
+                }
+            }
+            if (totalPlayerPointsWAceP >= 16)
+            {
+                totalPoints = totalPlayerPointsWAceP;
+            }
+            else
+            {
+                if (totalPlayerPointsWAceP > totalPlayerPointsP)
+                {
+                    totalPoints = totalPlayerPointsWAceP;
+                }
+                else
+                {
+                    totalPoints = totalPlayerPointsP;    
+                }
+                                
+            }
+            return totalPoints;
         }
         
         public void PrintTable(Deck gameDeck,Card[] garbage,Player[] players )
