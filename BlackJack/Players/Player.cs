@@ -7,17 +7,21 @@ namespace BlackJack
         public Card[] cards = new Card[6];
         public bool isDealer = false;
         Card[,] cardsDealt;
+
+        public int wallet;
         
-        public Player(Card[] cardsDealt)
+        public Player(Card[] cardsDealt, int wallet)
         {
             cards = cardsDealt;
+            this.wallet = wallet;
         }
         
-        public Player(Card[] cardsDealt,bool isDealer,Card[,] allCardsDealt)
+        public Player(Card[] cardsDealt,bool isDealer,Card[,] allCardsDealt, int wallet)
         {
             cards = cardsDealt;
             this.isDealer = isDealer;
             this.cardsDealt = allCardsDealt;
+            this.wallet = wallet;
         }
 
         public bool PlayerPlays()
@@ -288,6 +292,12 @@ namespace BlackJack
             }
             return askCard;
             
+        }
+
+        public int Wallet
+        {
+            get => wallet;
+            set => wallet = value;
         }
 
         public void PrintMyCards()

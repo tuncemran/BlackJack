@@ -5,6 +5,7 @@ namespace BlackJack
     public class Table
     {
         int PlayerNumber;
+        private int defaultWallet = 1000;
 
         public Table(int playerNumber, int numberOfDecks)
         {
@@ -17,29 +18,25 @@ namespace BlackJack
             Dealer dealer = new Dealer(PlayerNumber);
             
             Player[] players = new Player[PlayerNumber];
-
-
-
-            /*//PrintTable(gameDeck,garbage,players);
+            
             dealer.DealCards(gameDeck,garbage,PlayerNumber);
             PlayersGetCards(dealer,players);
-            PrintTable(gameDeck,garbage,players);
-            //bool dealer1 = players[0].PlayerPlays();
-            //bool player1 = players[1].PlayerPlays();
-            //Console.WriteLine(dealer1);
-            //Console.WriteLine(player1);
-            dealer.DealOnce(gameDeck,garbage,1);
-            PlayerHit(dealer,players,1);
-            PrintTable(gameDeck,garbage,players);*/
-            
-            
-            TablePlayRound(gameDeck,garbage,dealer,players,PlayerNumber);
-            
-            
-            //Player plays
-            //Dealer plays
-            //Winners are decided
-            //Cards are added to the garbage
+
+            bool condition1 = true;
+            bool condition2 = true;
+
+            int roundNumber = 1;
+            while (condition1 && condition2)
+            {
+                Console.WriteLine("******************************");
+                Console.Write("Round number: ");
+                Console.WriteLine(roundNumber);
+                condition1 = CheckMoney(players);
+                condition2 = CheckCards(PlayerNumber, gameDeck);
+                TablePlayRound(gameDeck,garbage,dealer,players,PlayerNumber);
+                Console.WriteLine("******************************");
+                roundNumber++;
+            }
         }
 
         public void PlayersGetCards(Dealer dealer,Player[] players)
@@ -59,11 +56,11 @@ namespace BlackJack
 
                 if (i == 0)
                 {
-                    players[i] = new Player(playerCards,true,dealer.cardsDealt);
+                    players[i] = new Player(playerCards,true,dealer.cardsDealt,defaultWallet);
                 }
                 else
                 {
-                    players[i] = new Player(playerCards);
+                    players[i] = new Player(playerCards,defaultWallet);
                 }
             }
         }
@@ -91,9 +88,8 @@ namespace BlackJack
         public void TablePlayRound(Deck gameDeck,Card[] garbage,Dealer dealer,Player[] players,int playerNumber)
         {
             
-            dealer.DealCards(gameDeck,garbage,PlayerNumber);
-            PlayersGetCards(dealer,players);
-            //PrintTable(gameDeck,garbage,players);
+            
+            
 
             for (int i = 1; i < players.Length; i++)
             {
@@ -164,8 +160,28 @@ namespace BlackJack
                         }
                         
                     }
+
+                    int lost = 0;
+                    int won = 0;
+                    foreach (int number in winners)
+                    {
+                        if (number == 1)
+                        {
+                            lost += 1;
+                        }
+                        else
+                        {
+                            won += 1;
+                        }
+                    }
+
+                    int total = (won - lost) * 10;
+                    players[j].wallet += total;
+                    
                     Console.Write("Total: ");
                     Console.WriteLine(ReturnTotalPoints(dealerPlayer.cards));
+                    Console.Write("Casino net: ");
+                    Console.WriteLine(players[j].wallet);
                     Console.WriteLine("");
                 }
                 else
@@ -214,6 +230,7 @@ namespace BlackJack
                     {
                         Console.WriteLine("Player loses");
                     }
+                    Console.WriteLine(players[j].wallet);
                 }
                 
             }
@@ -232,12 +249,14 @@ namespace BlackJack
                 if ((playerPoints > dealerPoints && playerPoints < 22) || (dealerPoints > 21 && playerPoints < 22) || playerPoints == 21)
                 {
                     winners[i] = 1;
+                    players[i].wallet += 10;
                 }
                 
                 
                 else
                 {
                     winners[i] = 0;
+                    players[i].wallet -= 10;
                 }
             }
             return winners;
@@ -308,7 +327,38 @@ namespace BlackJack
             }
             return totalPoints;
         }
-        
+
+        public bool CheckMoney(Player[] players)
+        {
+            int length = players.Length;
+            int count = 0;
+            for (int i = 0; i < length; i++)
+            {
+                if (players[i].wallet >= 0)
+                {
+                    count++;
+                }
+            }
+
+            if (count == length)
+            {
+                // everyone has enough money
+                return true;    
+            }
+
+            return false;
+
+        }
+        public bool CheckCards(int PlayerNumber,Deck gameDeck)
+        {
+            int limit = PlayerNumber * 52 / 2;
+            if (gameDeck.deck.Length > limit)
+            {
+                // there are enough cards
+                return true;
+            }
+            return false;
+        }
         public void PrintTable(Deck gameDeck,Card[] garbage,Player[] players )
         {
             
