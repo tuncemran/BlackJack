@@ -59,5 +59,57 @@ namespace BlackJack
             gameDeck.deck = newGameDeck;
 
         }
+
+        public void DealOnce(Deck gameDeck,Card[] garbage,int playerIndex)
+        {
+            // how many cards does the player have
+            int cardsObtained = 0;
+            int rowLength = cardsDealt.GetLength(1);
+            for (int i = 0; i < rowLength; i++)
+            {
+                if (cardsDealt[playerIndex,i] != null)
+                {
+                    cardsObtained++;
+                }    
+            }
+            
+            //append card to the correct place
+            cardsDealt[playerIndex,cardsObtained] = new Card(gameDeck.deck[0].Value,gameDeck.deck[0].Suit);
+            
+            
+            
+            //garbage
+            int garbageLength = 0;
+            for (int i = 0; i < garbage.Length; i++)
+            {
+                if (garbage[i] != null)
+                {
+                    garbageLength++;
+                }
+            }
+            //new gamedeck
+            
+            Card[] newGameDeck = new Card[gameDeck.deck.Length - 1];
+            int count = 0;
+            
+            for (int i = 0; i < gameDeck.deck.Length - 1 ; i++)
+            {
+                if (i == 0)
+                {
+                    // add it to the correct place 
+                    garbage[garbageLength + i] = new Card(gameDeck.deck[i].Value,gameDeck.deck[i].Suit);
+                }
+                else
+                {
+                    newGameDeck[count] = new Card(gameDeck.deck[i].Value, gameDeck.deck[i].Suit);
+                    count++;
+                }
+            }
+            
+            //game deck has new length
+            gameDeck.deck = newGameDeck;
+            
+
+        }
     }
 }

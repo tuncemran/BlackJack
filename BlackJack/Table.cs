@@ -20,17 +20,20 @@ namespace BlackJack
 
 
 
-            //PrintTable(gameDeck,garbage,players);
+            /*//PrintTable(gameDeck,garbage,players);
             dealer.DealCards(gameDeck,garbage,PlayerNumber);
             PlayersGetCards(dealer,players);
-            //PrintTable(gameDeck,garbage,players);
-            bool dealer1 = players[0].PlayerPlays();
+            PrintTable(gameDeck,garbage,players);
+            //bool dealer1 = players[0].PlayerPlays();
             //bool player1 = players[1].PlayerPlays();
-            Console.WriteLine(dealer1);
+            //Console.WriteLine(dealer1);
             //Console.WriteLine(player1);
+            dealer.DealOnce(gameDeck,garbage,1);
+            PlayerHit(dealer,players,1);
+            PrintTable(gameDeck,garbage,players);*/
             
             
-               
+            TablePlayRound(gameDeck,garbage,dealer,players,PlayerNumber);
             
             
             //Player plays
@@ -64,6 +67,47 @@ namespace BlackJack
                 }
             }
         }
+
+        public void PlayerHit(Dealer dealer,Player[] players,int playerIndex)
+        {
+            Card[] playerCards = new Card[6];
+            for (int i = 0; i < playerCards.Length; i++)
+            {
+                if (dealer.cardsDealt[playerIndex,i] == null)
+                {
+                    playerCards[i] = null;
+                }
+                else
+                {
+                    playerCards[i] = new Card(dealer.cardsDealt[playerIndex,i].Value,dealer.cardsDealt[playerIndex,i].Suit);    
+                }
+                
+                
+            }
+            
+            players[playerIndex].cards = playerCards;
+        }
+
+        public void TablePlayRound(Deck gameDeck,Card[] garbage,Dealer dealer,Player[] players,int playerNumber)
+        {
+            
+            dealer.DealCards(gameDeck,garbage,PlayerNumber);
+            PlayersGetCards(dealer,players);
+            PrintTable(gameDeck,garbage,players);
+
+            for (int i = 0; i < players.Length; i++)
+            {
+                bool condition = players[i].PlayerPlays();
+                if (condition)
+                {
+                    Console.WriteLine("Player played \n");
+                    dealer.DealOnce(gameDeck,garbage,i);
+                    PlayerHit(dealer,players,i);
+                }
+            }
+            
+            PrintTable(gameDeck,garbage,players);
+        }
         
         public void PrintTable(Deck gameDeck,Card[] garbage,Player[] players )
         {
@@ -88,11 +132,12 @@ namespace BlackJack
                         if (card != null)
                         {
                             Console.Write(card.Value);
-                            Console.Write(card.Suit, ",");    
+                            Console.Write(card.Suit);
+                            Console.Write(", ");
                         }
                         else
                         {
-                            Console.Write("null");
+                            Console.Write("null, ");
                         }
                         
                     }

@@ -36,10 +36,18 @@ namespace BlackJack
                     
                     if (card.Value == 14)
                     {
-                        wAceP = true;
-                        totalPlayerPointsWAceP += totalPlayerPointsP;
-                        totalPlayerPointsWAceP += 11;
-                        totalPlayerPointsP += 1;
+                        if (wAceP == false)
+                        {
+                            wAceP = true;
+                            totalPlayerPointsWAceP += totalPlayerPointsP;
+                            totalPlayerPointsWAceP += 11;
+                            totalPlayerPointsP += 1;
+                        }
+                        else
+                        {
+                            totalPlayerPointsWAceP += 11;
+                            totalPlayerPointsP += 1;
+                        }
                     }
                     else
                     {
@@ -85,9 +93,8 @@ namespace BlackJack
             {
                 // if the player is not the dealer
                 
-                
                 // if total is less than or equal to 16 ask for another card else stay
-                Console.WriteLine(totalPoints);
+                
                 if (totalPoints <= 16)
                 {
                     askCard = true;
@@ -119,10 +126,18 @@ namespace BlackJack
                             {
                                 if (cardsDealt[i, j].Value == 14)
                                 {
-                                    wAce = true;
-                                    totalPlayerPointsWAce += totalPlayerPoints;
-                                    totalPlayerPointsWAce += 11;
-                                    totalPlayerPoints += 1;
+                                    if (wAce == false)
+                                    {
+                                        wAce = true;
+                                        totalPlayerPointsWAce += totalPlayerPoints;
+                                        totalPlayerPointsWAce += 11;
+                                        totalPlayerPoints += 1;
+                                    }
+                                    else
+                                    {
+                                        totalPlayerPointsWAce += 11;
+                                        totalPlayerPoints += 1;
+                                    }
                                 }
                                 else
                                 {
@@ -170,10 +185,18 @@ namespace BlackJack
                             {
                                 if (cardsDealt[i, j].Value == 14)
                                 {
-                                    wAce = true;
-                                    totalPlayerPointsWAce += totalPlayerPoints;
-                                    totalPlayerPointsWAce += 11;
-                                    totalPlayerPoints += 1;
+                                    if (wAce == false)
+                                    {
+                                        wAce = true;
+                                        totalPlayerPointsWAce += totalPlayerPoints;
+                                        totalPlayerPointsWAce += 11;
+                                        totalPlayerPoints += 1;
+                                    }
+                                    else
+                                    {
+                                        totalPlayerPointsWAce += 11;
+                                        totalPlayerPoints += 1;
+                                    }
                                 }
                                 else
                                 {
@@ -220,7 +243,7 @@ namespace BlackJack
                     
                 }
                 // if current total point is higher than the others
-                foreach (int points in playerPoints)
+                /*foreach (int points in playerPoints)
                 {
                     Console.WriteLine(points);
                 }
@@ -231,7 +254,7 @@ namespace BlackJack
                     {
                         Console.WriteLine(card.Value);
                     }
-                }
+                }*/
 
                 int dealerPoint = playerPoints[0];
                 int comparePoint = 0;
