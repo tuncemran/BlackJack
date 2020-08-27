@@ -1,0 +1,11 @@
+/Users/yavuztuncemran/RiderProjects/BlackJack/BlackJack/bin/Debug/netcoreapp2.1/BlackJack.deps.json
+/Users/yavuztuncemran/RiderProjects/BlackJack/BlackJack/bin/Debug/netcoreapp2.1/BlackJack.runtimeconfig.json
+/Users/yavuztuncemran/RiderProjects/BlackJack/BlackJack/bin/Debug/netcoreapp2.1/BlackJack.runtimeconfig.dev.json
+/Users/yavuztuncemran/RiderProjects/BlackJack/BlackJack/bin/Debug/netcoreapp2.1/BlackJack.dll
+/Users/yavuztuncemran/RiderProjects/BlackJack/BlackJack/bin/Debug/netcoreapp2.1/BlackJack.pdb
+/Users/yavuztuncemran/RiderProjects/BlackJack/BlackJack/obj/Debug/netcoreapp2.1/BlackJack.csprojAssemblyReference.cache
+/Users/yavuztuncemran/RiderProjects/BlackJack/BlackJack/obj/Debug/netcoreapp2.1/BlackJack.csproj.CoreCompileInputs.cache
+/Users/yavuztuncemran/RiderProjects/BlackJack/BlackJack/obj/Debug/netcoreapp2.1/BlackJack.AssemblyInfoInputs.cache
+/Users/yavuztuncemran/RiderProjects/BlackJack/BlackJack/obj/Debug/netcoreapp2.1/BlackJack.AssemblyInfo.cs
+/Users/yavuztuncemran/RiderProjects/BlackJack/BlackJack/obj/Debug/netcoreapp2.1/BlackJack.dll
+/Users/yavuztuncemran/RiderProjects/BlackJack/BlackJack/obj/Debug/netcoreapp2.1/BlackJack.pdb

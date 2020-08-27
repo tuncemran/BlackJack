@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$USER_HOME$/Library/Caches/JetBrains/Rider2020.2/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/Library/Caches/JetBrains/Rider2020.2/resharper-host/local/Transient/Rider/v202/SolutionCaches/_BlackJack.652133243.00" t="ExcludeRecursive" />
+    <e p="$PROJECT_DIR$" t="IncludeFlat">
+      <e p="BlackJack" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="BlackJack.csproj" t="IncludeRecursive" />
+        <e p="GameMaterials" t="Include">
+          <e p="Card.cs" t="Include" />
+          <e p="Deck.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.1" t="Include">
+              <e p="BlackJack.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Players" t="Include">
+          <e p="Dealer.cs" t="Include" />
+          <e p="Player.cs" t="Include" />
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="Table.cs" t="Include" />
+      </e>
+      <e p="BlackJack.sln" t="IncludeFlat" />
+      <e p="packages" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
